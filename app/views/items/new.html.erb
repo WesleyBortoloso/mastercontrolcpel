@@ -1,0 +1,36 @@
+<%= stylesheet_link_tag 'orders/new', media: 'all', 'data-turbolinks-track': 'reload' %>
+<title>MasterControl - Vincular Item</title>
+
+<main>
+  <ul id="progressbar">
+    <li class="active">Cadastrar Pedido</li>
+    <li class="active">Vincular Item</li>
+  </ul>
+ <div class="create-form">
+  <h1>Vincular item a <%= @item&.order&.client %> </h1>
+
+  <%= form_with(model: @item, url: items_path(order_id: @item&.order&.id)) do |form| %>
+
+  <div class="first-grid">
+    <div class="field">
+      <%= form.label :name, "Tipo do item" %>
+      <%= form.text_field :name, required: true, maxlength: 8 %>
+    </div>
+
+    <div class="field">
+      <%= form.label :description, "Descrição" %>
+      <%= form.text_field :description, required: true %>
+    </div>
+  </div>
+  <div class="second-grid">
+    <div class="field">
+      <%= form.label :quantity, "Quantidade" %>
+      <%= form.number_field  :quantity, required: true %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= form.submit "Cadastrar" %>
+  </div>
+  <% end %>
+  </div>
+</main>

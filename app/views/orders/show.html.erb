@@ -1,0 +1,61 @@
+<%= stylesheet_link_tag 'orders/show', media: 'all', 'data-turbolinks-track': 'reload' %>
+<title>MasterControl - Visualizar Pedido</title>
+
+<p style="color: green" class="notice"><%= notice %></p>
+
+<main>
+  <div class="grid">
+    <h1>Pedido</h1>
+    <div class="first-grid">
+      <div class="field">
+        <h2>Descrição</h2>
+        <p><%=@order.description%></p>
+      </div>
+
+      <div class="field">
+        <h2>Cliente</h2>
+        <p><%=@order.client%></p>
+      </div>
+
+      <div class="field">
+        <h2>Setor</h2>
+        <p><%=@order.sector%></p>
+      </div>
+    </div>
+    <div class="second-grid">
+      <div class="field">
+        <h2>Data de entrega</h2>
+        <p><%=@order.delivery_date%></p>
+      </div>
+
+      <div class="field">
+        <h2>Status</h2>
+        <p><%=@order.status%></p>
+      </div>
+    </div>
+    <h1> Item(s) </h1>
+    <%@order.items.each do |item| %>
+      <div class="first-grid">
+        <div class="field">
+          <h2>Tipo</h2>
+          <p><%=item.name%></p>
+        </div>
+
+        <div class="field">
+          <h2>Descrição</h2>
+          <p><%=item.description%></p>
+        </div>
+      </div>
+      <div class="second-grid">
+        <div class="field">
+          <h2>Quantidade</h2>
+          <p><%=item.quantity%></p>
+        </div>
+      </div>
+    <%end%>
+    <div class="links">
+      <%= link_to "Editar Pedido", edit_order_path(@order) %> |
+      <%= link_to "Voltar para página principal", orders_path %>
+    </div>
+  </div>
+</main>

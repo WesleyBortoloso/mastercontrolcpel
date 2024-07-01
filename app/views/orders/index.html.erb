@@ -1,0 +1,101 @@
+<%= stylesheet_link_tag 'orders/index', media: 'all', 'data-turbolinks-track': 'reload' %>
+<title>MasterControl - Dashboard</title>
+
+<p style="color: green" class="notice"><%= notice %></p>
+
+<div class="side-menu">
+ <div class="brand">
+  <h1>CPEL</h1>
+    <%= image_tag 'cpel-png.png' %>
+ </div>
+ <div class="logout">
+ <%= link_to destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: 'Tem certeza que deseja deslogar?' }, class: 'logout-btn' do %>
+    <%= image_tag 'logoutt.png' %>
+  <%end%>
+ </div>
+</div>
+<div class="container">
+  <div class= "header">
+    <div class= "nav">
+      <div class= "filter">
+        <%= form_with url: orders_path, method: :get, class:  'filter-form' do |form| %>
+          <%= form.label :filtro, "Filtro" %>
+          <%= form.select :filtro, options_for_select(Order.options_for_filter), {}, include_blank: true %>
+
+          <%= form.label :valor_filtro, "Conteúdo" %>
+          <%= form.text_field :valor_filtro %>
+          <%= form.submit 'Filtrar' %>
+        <% end %>
+      </div>
+      <div class= "filter">
+        <%= form_with url: orders_path, method: :get, class:  'filter-form' do |form| %>
+          <%= form.label :filtro_item, "Filtro Item" %>
+          <%= form.select :filtro_item, options_for_select(Item.options_for_filter), {}, include_blank: true %>
+
+          <%= form.label :valor_filtro_item, "Conteúdo Item" %>
+          <%= form.text_field :valor_filtro_item %>
+          <%= form.submit 'Filtrar' %>
+        <% end %>
+      </div>
+    </div>  
+  </div>
+  <div class="content">
+    <div class="cards">
+      <div class="card">
+        <div class="box">
+          <h1> <%= Order.all.count %> </h1>
+          <h3> Pedidos </h3>
+        </div>
+      </div>
+      <div class="card">
+        <div class="box">
+          <h1> <%= Item.distinct.count(:name) %> </h1>
+          <h3> Items </h3>
+        </div>
+      </div>
+      <div class="card">
+        <div class="box">
+          <h1> <%= Order.where(status: 'proccess').count %> </h1>
+          <h3> Pedidos em processo </h3>
+        </div>
+      </div>
+      <div class="card">
+        <div class="box">
+          <h1> <%= Order.where(status: 'waiting').count %> </h1>
+          <h3> Pedidos aguardando </h3>
+        </div>
+      </div>
+    </div>
+    <div class="content-2">
+      <div class="orders">
+        <div class="title">
+          <h2>Pedidos</h2>
+          <%= link_to 'Adicionar', new_order_path %>
+        </div>
+        <table>
+          <tr>
+            <th>Id</th>
+            <th>Descrição</th>
+            <th>Cliente</th>
+            <th>Setor</th>
+            <th>Data de Entrega</th>
+            <th>Status</th>
+            <th>Detalhes</th>
+          </tr>
+          <% @orders.each do |order| %>
+            <tr>
+              <td> <%= order.id %> </td>
+              <td> <%= order.description %> </td>
+              <td> <%= order.client %> </td>
+              <td> <%= order.sector %> </td>
+              <td> <%= order.delivery_date %> </td>
+              <td> <%= order.status %> </td>
+              <td> <%= link_to 'Detalhes', order_path(order.id) %> </td>
+            </tr>
+          <% end %>
+        </table>
+        <%= will_paginate @produtos %>
+      </div>
+    </div>
+  </div>
+</div>  

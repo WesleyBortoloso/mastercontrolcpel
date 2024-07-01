@@ -1,0 +1,48 @@
+<%= stylesheet_link_tag 'orders/new', media: 'all', 'data-turbolinks-track': 'reload' %>
+<title>MasterControl - Criar Pedido</title>
+
+<main>
+  <ul id="progressbar">
+    <li class="active">Cadastrar Pedido</li>
+    <li>Vincular Item</li>
+  </ul>
+ <div class="create-form">
+  <h1>Cadastrar Pedido</h1>
+
+  <%= form_with(model: @order) do |form| %>
+
+
+  <div class="first-grid">
+    <div class="field">
+      <%= form.label :description, "Descrição" %>
+      <%= form.text_field :description, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :client, "Cliente" %>
+      <%= form.text_field :client, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :sector, "Setor" %>
+      <%= form.text_field :sector, required: true %>
+    </div>
+  </div>
+  <div class="second-grid">
+    <div class="field">
+      <%= form.label :delivery_date, "Data de entrega" %>
+      <%= form.date_field :delivery_date, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :status %>
+      <%= form.select :status, options_for_select(Order.statuses.map {|key, value| [key.humanize, value]}), {}, required: true %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= form.submit "Continuar" %>
+    <%= link_to "Voltar para o dashboard", orders_path %>
+  </div>
+  <% end %>
+  </div>
+</main>
